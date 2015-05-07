@@ -209,11 +209,12 @@ module Geocoder
       def make_api_request(query)
         timeout(configuration.timeout) do
           uri = URI.parse(query_url(query))
-          warn uri
+          warn "#{Time.now}:#{Thread.current.object_id}>: #{uri}"
           client = http_client.new(uri.host, uri.port)
           client.use_ssl = true if configuration.use_https
           response = client.get(uri.request_uri, configuration.http_headers)
           warn response.body
+          warn "<#{Time.now}"
           response
         end
       end
